@@ -28,7 +28,7 @@ class User:
     @classmethod
     def users_list(cls):
         """Class method - returns a list of dictionaries each containing information about a user."""
-        return [{user} for user in cls.__users]     # Uses list comprehension to concisely return a list of dictionaries 
+        return [{user} for user in cls.__users]     # Uses list comprehension to elegantly return a list of dictionaries 
     
     def __str__(self):
         """Instance dunder method - returns a summarized string representation of the instance."""
