@@ -2,7 +2,6 @@ project_manager/
 ├── main.py                   # CLI entry point (if __name__ == "__main__")
 ├── models/
 │   ├── __init__.py
-│   ├── person.py             # Base Person class (Task 3: Person → User inheritance)
 │   ├── user.py               # User(Person): name, email, ID counter
 │   ├── project.py            # Project: title, description, due_date
 │   └── task.py               # Task: title, status, assigned_to
@@ -20,6 +19,9 @@ project_manager/
 │   ├── __init__.py
 │   ├── test_models.py
 │   └── test_storage.py
+├── venv/
 ├── requirements.txt
 ├── .gitignore
+├── Pipfile
+├── Pipfile.lock
 └── README.md
