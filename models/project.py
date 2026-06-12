@@ -33,7 +33,7 @@ class Project:
         return [{project} for project in cls.__projects]     # Uses list comprehension to elegantly return a list of dictionaries 
     
     def assigned_user_info(self):
-        return [user for user in User.users_list() if user.id_number == self.assigned_user_id]
+        return any(user for user in User.users_list() if user.id_number == self.assigned_user_id)
 
     @classmethod
     def pending_projects_within_duration(cls, duration):
