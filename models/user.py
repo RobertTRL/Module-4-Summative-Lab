@@ -7,15 +7,12 @@ from utils.helpers import ClassProperty
 
 class User:
     """Class representing a user. Has instance attributes namely name, email and id_number and a class attribute users."""
-    
-    with open("../data/data.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-    
+
     def __init__(self, name, email):
         """Constructor method - takes name and email as arguments, generates a unique id for the instance and appends itself to the users list."""
         self.name = name
         self.email = email
-        self.__id_number = uuid.uuid4()             # Generates a unique id using the uuid module
+        self.__id_number = str(uuid.uuid4())             # Generates a unique id using the uuid module
         self.__add_user()                   # Appends itself to the private class attribute users
         
     @property
@@ -31,7 +28,7 @@ class User:
     @classmethod
     def users_list(cls):
         """Class method - returns a list of dictionaries each containing information about a user."""
-        return [{user} for user in cls.__get_users()]     # Uses list comprehension to elegantly return a list of dictionaries 
+        return cls.__get_users()     # Uses list comprehension to elegantly return a list of dictionaries 
     
     def __add_user(self):
         info = {"name": self.name, "email": self.email, "id_number": self.id_number}
@@ -57,7 +54,43 @@ class User:
         with open("../data/data.json", "w", encoding="utf-8") as f:
             data["users"] = remaining_users
             json.dump(data, f, indent=4)
+
+    @classmethod
+    def edit_user_details(cls, user_id, name=None, email=None):
+        if not name and not email:
+            raise ValueError("Enter values to edit user details.")
         
+        with open("../data/data.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            users = data["users"]
+            user_details = [user for user in users if user["id_number"] == user_id]
+            
+        edited_user_details = {
+            "id_number": user_id,
+            "name": name if name else user_details["name"],
+            "email": email if email else user_details["email"]
+        }
+
+        index = next((i for i, u in enumerate(users) if u["id_number"] == user_id), None)
+
+        if index is None:
+            raise ValueError("User not found.")
+
+        users[index] = edited_user_details
+
+        with open("../data/data.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+
+    @classmethod
+    def get_user_by_id(cls, username):
+        with open("../data/data.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        if any(user for user in data["users"] if user["name"] == username):
+            return [user for user in data["users"] if user["name"] == username][0]
+        else:
+            raise ValueError("User not found.")
+
     @classmethod
     def __get_users(cls):
         with open("../data/data.json", "r", encoding="utf-8") as f:
