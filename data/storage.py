@@ -6,7 +6,8 @@ import json
 from utils.helpers import ClassProperty
 from models.user import User
 
-class UserRepository:
+class UserPersistence:
+    # TODO: Make a single Persistence class, and create child classes
     def __init__(self, file_path):
         self.file_path = Path(file_path)
 
@@ -26,6 +27,9 @@ class UserRepository:
         data["users"].append(user.to_dict())
         self._save(data)
 
+    def count(self):
+        return len(self.get_all_users())
+    
     def get_all_users(self):
         data = self._load()
         return [User.from_dict(u) for u in data["users"]]

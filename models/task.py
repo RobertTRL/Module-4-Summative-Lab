@@ -7,7 +7,6 @@ from models.user import User
 from models.project import Project
 
 class Task:
-    __tasks = []
     def __init__(self, title, status, assigned_user_id, project_id):
         self.title = title
         self.status = status
@@ -15,28 +14,11 @@ class Task:
         self.project_id = project_id
         self.completed = False
         self.__id_number = uuid.uuid4()
-        Task.__tasks.append(self)
 
     @property
     def id_number(self):
         """Instance property getter - returns the unique id of the instance."""
         return self.__id_number
-
-    @ClassProperty                                  # Class descriptor used to make a class property because stacking the @classmethod and @property has become deprecated 
-    def count(cls):
-        """Class property getter - returns the number of instances of the class by accessing the private class attribute users and returning its length."""
-        return len(cls._Task__tasks)  
-    
-    @classmethod
-    def tasks_list(cls):
-        """Class method - returns a list of dictionaries each containing information about a task."""
-        return [{task} for task in cls.__tasks]     # Uses list comprehension to elegantly return a list of dictionaries 
-    
-    def assigned_user_info(self):
-        return any(user for user in User.users_list() if user.id_number == self.id_number)
-    
-    def assigned_project_info(self):
-        return any(project for project in Project.projects_list() if project.id_number == self.project_id)
     
     def __str__(self):
         """Instance dunder method - returns a summarized string representation of the instance."""

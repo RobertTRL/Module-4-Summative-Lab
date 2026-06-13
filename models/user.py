@@ -16,10 +16,7 @@ class User:
     @property
     def id_number(self):
         return self.__id_number
-    
-    def to_dict(self):
-        return {"name": self.name, "email": self.email, "id_number": self.id_number}
-        
+     
     def __str__(self):
         """Instance dunder method - returns a summarized string representation of the instance."""
         return f"User info:\n{self.name=},\n{self.email=}"
