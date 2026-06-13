@@ -20,13 +20,6 @@ class Task:
         """Instance property getter - returns the unique id of the instance."""
         return self.__id_number
     
-    
-    # def assigned_user_info(self):
-    #     return any(user for user in User.users_list() if user.id_number == self.id_number)
-    
-    # def assigned_project_info(self):
-    #     return any(project for project in Project.projects_list() if project.id_number == self.project_id)
-    
     def __str__(self):
         """Instance dunder method - returns a summarized string representation of the instance."""
         return f"Task info:\n{self.title=},\n{self.status=}, \n{self.assigned_user_id=}, \n{self.project_id=}, \n{self.completed=}, \n{self.id_number=}"

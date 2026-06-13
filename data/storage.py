@@ -89,14 +89,6 @@ class UserPersistence(Persistence):
     def delete_user(self, user_id):
         self.delete(user_id)
 
-    def get_user_by_email(self, email):
-        """Return the User whose email matches, or None."""
-        data = self._load()
-        for user in data["users"]:
-            if user["email"] == email:
-                return User.from_dict(user)
-        return None
-
     def update_user(self, user_id, name=None, email=None):
         """Update a user's name and/or email."""
         self.update(user_id, name=name, email=email)
@@ -105,7 +97,6 @@ class ProjectPersistence(Persistence):
     _entity_key = "projects"
     _from_dict = staticmethod(Project.from_dict)
 
-    # Convenience aliases
     def add_project(self, project):
         self.add(project)
 
@@ -118,8 +109,7 @@ class ProjectPersistence(Persistence):
     def delete_project(self, project_id):
         self.delete(project_id)
 
-    def update_project(self, project_id, title=None, description=None,
-                       due_date=None, completed=None):
+    def update_project(self, project_id, title=None, description=None, due_date=None, completed=None):
         """Update writable fields on a project."""
         self.update(project_id, title=title, description=description, due_date=due_date, completed=completed)
 
@@ -145,7 +135,6 @@ class TaskPersistence(Persistence):
     _entity_key = "tasks"
     _from_dict = staticmethod(Task.from_dict)
 
-    # Convenience aliases
     def add_task(self, task):
         self.add(task)
 
